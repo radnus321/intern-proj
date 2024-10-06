@@ -1,42 +1,39 @@
-import React from 'react'
-import './message-box.css'
-import Message from '../message/Message'
-import Input from '../input/Input'
-const users = [
-    {
-        name: "name1",
-        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit"
-    },
-    {
-        name: "name2",
-        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit"
-    },
-    {
-        name: "name3",
-        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit"
-    }
-]
+import React, { useState } from 'react';
+import './message-box.css';
+import Message from '../message/Message';
+import Input from '../input/Input';
 
-const messages = []
+const initialMessages = [
+  {
+    name: "sundar",
+    message: "Hello notSundar! How is it going ?"
+  },
+  {
+    name: "notSundar",
+    message: "I'm doing good, what's up with you ?"
+  },
+];
+
 const MessageBox = () => {
-    const user1 =     {
-        name: "name1",
-        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit"
-    }
-    const user2 =     {
-        name: "name2",
-        message: "Hello"
-    }
-  return (
-    <>
-        <div className='main-container'>
-            <Message user={user1}/>
-            <Message user={user2}/>
-            <Message user={user1}/>
-            <Input messages={messages}/>
-        </div>
-    </>
-  )
-}
+  const [messages, setMessages] = useState(initialMessages);
 
-export default MessageBox
+  const handleSend = (newMessage) => {
+    console.log('Message sent:', newMessage);
+    const msg = {
+        name: "sundar",
+        message: newMessage
+    }
+    setMessages([...messages, msg]);
+  };
+
+  return (
+    <div className='main-container'>
+      {messages.map((user, index) => (
+        <Message key={index} user={user}/>
+      ))}
+      <Input onSend={handleSend} />
+    </div>
+  );
+};
+
+export default MessageBox;
